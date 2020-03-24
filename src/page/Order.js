@@ -45,6 +45,32 @@ class order extends Component {
         console.log(error);
       });
     }
+    
+    Accept = (id) => {
+        if(window.confirm("Apakah anda yakin menerima produk ini?")){
+        let url = "http://localhost/eproduk/public/accept/" + id
+        axios.post(url)
+        .then(res => {
+          this.GetOrders()
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+    }
+
+    Decline = (id) => {
+      if(window.confirm("Apakah anda yakin menolak produk ini?")){
+      let url = "http://localhost/eproduk/public/decline/" + id
+      axios.post(url)
+      .then(res => {
+        this.GetOrders()
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  }
 
     componentDidMount = () => {
       this.get_order();
@@ -126,13 +152,12 @@ class order extends Component {
                         </td>
                         <td>{item.status}</td>
                         <td><td>
-                          <Link className="m-1 btn btn-sm btn-outline-info" onClick="http://localhost/eproduk/public/order/decline/{id_order}">
-                            <span>Terima</span>
-                          </Link>
-                          <Link className="m-1 btn btn-sm btn-outline-danger"
-                            onClick={() => this.Drop(item.id_user)}>
-                            <span className="#">Tolak</span>Link
-                          </Link>
+                          <button className="m-1 btn btn-sm btn-outline-info" onClick={() => this.Accept(item.id_order)}>
+                            <span className="#">Terima</span>
+                          </button>
+                          <button className="m-1 btn btn-sm btn-outline-danger" onClick={() => this.Decline(item.id_order)}>
+                            <span className="#">Tolak</span>
+                          </button>
                         </td></td>
                       </tr>
                     );
